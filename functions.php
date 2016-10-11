@@ -1,5 +1,14 @@
 <?php
 
+	//6. tund
+    //<script>location.href=""</script>
+
+	//-) "tühik" on trim function
+	//-) < > html special char &lt; -> <  [& -> &amp;]
+	//-) \"
+
+igale poole exit ja cleaninput
+
 	require("../../config.php");
 
 	//functions.php
