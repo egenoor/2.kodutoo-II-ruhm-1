@@ -7,7 +7,7 @@
 	//-) < > html special char &lt; -> <  [& -> &amp;]
 	//-) \"
 
-igale poole exit ja cleaninput
+//igale poole exit ja cleaninput
 
 	require("../../config.php");
 
