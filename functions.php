@@ -13,17 +13,17 @@
 	//**** SIGNUP *****
 	//*****************	
 		
-	function signUp ($email, $password)	{
+	function signUp ($email, $password, $website, $comment, $age)	{
 		
 		$database = "if16_ege";
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $database);
 	
 		//sqli rida
-		$stmt = $mysqli->prepare("INSERT INTO user_sample (email, password) VALUES (?, ?)");
+		$stmt = $mysqli->prepare("INSERT INTO user_sample (email, password, website, comment, age) VALUES (?, ?, ?, ?, ?)");
 		
 		echo $mysqli->error;
 		
-		$stmt->bind_param("ss", $email, $password);
+		$stmt->bind_param("sssss", $email, $password, $website, $comment, $age);
 		
 		//täida käsku
 		if($stmt ->execute() ) {
@@ -41,6 +41,8 @@
 		
 		
 	}
+	
+	
 		
 	function login ($email, $password) {
 		

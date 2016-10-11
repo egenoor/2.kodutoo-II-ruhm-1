@@ -27,9 +27,11 @@
 	$signupEmailError = "";
 	$signupPasswordError = "";
 	$signupCommentError = "";
+	$signupComment = "";
 	$signupEmail = "";
 	$signupGender = "";
 	$signupWebsite = "";
+	$signupAge = "";
 	
 	// kas e/post oli olemas
 	if ( isset ( $_POST["signupEmail"] ) ) {
@@ -69,16 +71,31 @@
 			
 		}
 		
-		if (isset ( $_POST["comment"] ) ) {
 		
-		if ( empty ( $_POST["comment"] ) ) {
+	}
+	
+	if (isset ( $_POST["signupComment"] ) ) {
+		
+		if ( empty ( $_POST["signupComment"] ) ) {
 			
 			//kommentaar oli tühi
 			$signupCommentError = "See väli on kohustuslik!" ;
+		} else {
+			
+			$signupComment = $_POST["signupComment"];
 		}
-		
+	
 	}
+	
+	if ( isset ( $_POST["signupAge"] ) ) {
 		
+		if ( empty ( $_POST["signupAge"] ) ) {
+			
+		} else {
+			
+			$signupAge = $_POST["signupAge"];
+			
+		}
 		
 	}
 	
@@ -111,8 +128,12 @@
 	
 	if ( isset($_POST["signupEmail"]) &&
 		isset($_POST["signupPassword"]) &&
+		isset($_POST["signupWebsite"]) &&
+		isset($_POST["signupComment"]) &&
+		isset($_POST["signupAge"]) &&
 		$signupEmailError == "" &&
-	     empty ($signupPasswordError) 
+	     empty ($signupPasswordError)
+
 		 
 		 ) {
 		 
@@ -124,13 +145,19 @@
 		 
 		 $password = hash("sha512", $_POST["signupPassword"]);
 		 
-		 echo "password hashed: ".$password."<br>";
+		 echo "password hashed: ".$password."<br>";		 
+		 echo "website: ".$signupWebsite."<br>";		 
+		 echo "comment: ".$signupComment."<br>";	 
+		 echo "age: ".$signupAge."<br>";
 		 
 		 
 		 //echo $serverUsername;
 		 
 		 //KASUTAN FUNKTSIOONI
-		 signUp($signupEmail, $password);
+		 $signupEmail = cleanInput($signupEmail);
+		 $signupWebsite = cleanInput($signupWebsite);
+		 
+		 signUp($signupEmail, cleanInput($password), $signupWebsite, $signupComment, $signupAge);
 		
 		
 		
@@ -143,7 +170,7 @@
 		!empty($_POST["loginPassword"])
 		) {
 			
-			$error = login($_POST["loginEmail"], $_POST["loginPassword"]);
+			$error = login(cleanInput($_POST["loginEmail"]), cleanInput($_POST["loginPassword"]));
 			
 			
 			
@@ -197,12 +224,12 @@
 			<br><br>
 			
 			<label>Kommentaar</label><br>
-			<textarea name="comment" rows="5" cols="40"></textarea> <?php echo $signupCommentError; ?>
+			<textarea name="signupComment" rows="5" cols="40"><?=$signupComment;?></textarea> <?php echo $signupCommentError; ?>
 			
 			<br><br>
 			
 			<label>Vanus</label><br>
-			<input name="signupAge" type="age">
+			<input name="signupAge" type="age" value="<?=$signupAge;?>">
 			
 			<br><br>
 			<label>Sugu</label><br>
