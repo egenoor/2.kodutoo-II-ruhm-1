@@ -109,82 +109,28 @@
 		
 	}	
 		
-
-		
-		//*****************
-		//*****SAVECAR*****
-		//*****************
-		
-		function saveCar ($plate, $color) {
+		function saveData ($Username, $favActor, $favMov, $movGenre) {
 		
 		$database = "if16_ege";
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $database);
+		$stmt = $mysqli->prepare("INSERT INTO user_movies(username, movie_actor, movie_fav, movie_genre) VALUES (?, ?, ?, ?)");
 	
-		//sqli rida
-		$stmt = $mysqli->prepare("INSERT INTO cars_and_colors (plate, color) VALUES (?, ?)");
-		
 		echo $mysqli->error;
 		
-		$stmt->bind_param("ss", $plate, $color);
-		if($stmt ->execute() ) {
-			
+		$stmt->bind_param("ssss", $Username, $favActor, $favMov, $movGenre);
+		
+		if($stmt->execute()) {
 			echo "salvestamine õnnestus";
-			
 		} else {
-			echo "ERROR ". $stmt->error;
+		 	echo "ERROR ".$stmt->error;
 		}
 		
 		$stmt->close();
 		$mysqli->close();
 		
-		
-		}
-	
-		
-		function getAllCars() {
-		
-			$database = "if16_ege";
-			$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $database);
-		
-			$stmt = $mysqli->prepare("
-			
-			SELECT id, plate, color
-			FROM cars_and_colors
-			");
-			
-			echo $mysqli->error;
-			
-			$stmt->bind_result($id, $plate, $color);
-			$stmt->execute();
-			
-			//tekitan massiivi
-			$result = array();
-			
-			//tee seda seni, kuni on rida andmeid
-			//mis vastab select lausele
-			while($stmt->fetch()) {
-				
-				
-			//tekitan objekti
-			$car = new StdClass();
-			
-			$car->id = $id;
-			$car->plate = $plate;
-			$car->color = $color;	
-			
-				//echo $plate."<br>";
-				//igakord massiivi lisan juurde nr märgi
-				array_push($result, $car);				
-			}
-			
-		
-			
-			$stmt->close();
-			$mysqli->close();
-		
-		return $result;
-		
 	}
+		
+		
 		
 		function cleanInput($input){
 			

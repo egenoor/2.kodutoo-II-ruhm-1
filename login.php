@@ -179,6 +179,8 @@
 	
 	
 ?>
+
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -186,71 +188,71 @@
 	</head>
 	<body>
 
-		<h1>Logi sisse</h1>
+		<h1>Log in</h1>
 		
 		<form method="POST">
 			
 			 <p style="color:red;"><?=$error;?></p>
 			
-			<label>E-post</label><br>
+			<label>Email</label><br>
 			<input name="loginEmail" type="text"> 
 			
 			<br><br>
 			
-			<input name="loginPassword" type="password" placeholder="Parool">
+			<input name="loginPassword" type="password" placeholder="Password">
 			
 			<br><br>
 			
-			<input type="submit" value="Logi sisse">
+			<input type="submit" value="Log in">
 			
 		</form>
 		
-		<h1>Loo kasutaja</h1>
+		<h1>Create account</h1>
 		
 		<form method="POST">
 			
-			<label>E-post</label><br>
+			<label>Email</label><br>
 			<input name="signupEmail" type="text" value="<?=$signupEmail;?>"> <?php echo $signupEmailError; ?>
 			
 			<br><br>
 			
-			<input name="signupPassword" type="password" placeholder="Parool"> <?php echo $signupPasswordError; ?>
+			<input name="signupPassword" type="password" placeholder="Password"> <?php echo $signupPasswordError; ?>
 			
 			<br><br>
 			
-			<label>Lehekülg</label><br>
+			<label>Website</label><br>
 			<input name="signupWebsite" type="text" value="<?=$signupWebsite;?>">
 			
 			<br><br>
 			
-			<label>Kommentaar</label><br>
+			<label>Comment</label><br>
 			<textarea name="signupComment" rows="5" cols="40"><?=$signupComment;?></textarea> <?php echo $signupCommentError; ?>
 			
 			<br><br>
 			
-			<label>Vanus</label><br>
+			<label>Age</label><br>
 			<input name="signupAge" type="age" value="<?=$signupAge;?>">
 			
 			<br><br>
-			<label>Sugu</label><br>
+			<label>Gender</label><br>
 			
 			<?php if($signupGender == "male") { ?>
-			<input type="radio" name="signupGender" value="male" checked> Mees<br>
+			<input type="radio" name="signupGender" value="male" checked> Man<br>
 			<?php }else { ?>
 			
-			<input type="radio" name="signupGender" value="male"> Mees<br>
+			<input type="radio" name="signupGender" value="male"> Man<br>
 			<?php } ?>
 		
 			<?php if($signupGender == "female") { ?>
-			<input type="radio" name="signupGender" value="female" checked> Naine<br>
+			<input type="radio" name="signupGender" value="female" checked> Female<br>
 			<?php }else { ?>
-			<input type="radio" name="signupGender" value="female"> Naine<br>
+			<input type="radio" name="signupGender" value="female"> Female<br>
 			<?php } ?>
 			
 			
 			<br><br>
 			
-			<input type="submit" value="Loo kasutaja">
+			<input type="submit" value="Create account">
 			
 		</form>
 		
