@@ -21,8 +21,8 @@
 	}
 
 	$msg = " ";
-if(isset($_SESSION["message"])) {
-	$msg = $_SESSION["message"];
+	if(isset($_SESSION["message"])) {
+		$msg = $_SESSION["message"];
 	
 		//kui ühe näitame siis kusutua ära, et pärast refreshi ei näita
 	unset($_SESSION["message"]);

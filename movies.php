@@ -6,6 +6,7 @@
 	$Username = "";
 	$favActor = "";
 	$favMov = "";
+	//$movGenre = "";
 	
 	//kui ei ole kasutaja id'd
 	if (!isset($_SESSION["userId"])){
@@ -75,11 +76,23 @@
 		}
 		
 	}
+	
+		if(isset($_POST["Username"]) &&
+		isset($_POST["favActor"]) &&
+		isset($_POST["favMov"]) &&
+		isset($_POST["movGenre"]) &&
+		!empty($_POST["Username"]) &&
+		!empty($_POST["favActor"]) &&
+		!empty($_POST["favMov"])
+		) {
 			
-			//salvestan andmebaasi			
-		saveData($Username, $favActor, $favMov, $movGenre);
-			
+		saveData($_POST["Username"], $_POST["favActor"], $_POST["favMov"], $_POST["movGenre"]);
 		
+			
+		}
+			
+			//saan filmi andmed
+			$saveData = getMovieData();
 		
 		
 ?>
@@ -135,3 +148,34 @@
 		</form>
 	</body>
 </html>
+
+<?php
+	
+		$html = "<table>";
+
+		
+		$html .= "<tr>";
+				$html .="<th>id</th>";
+				$html .="<th>username</th>";
+				$html .="<th>actor</th>";
+				$html .="<th>movie</th>";
+				$html .="<th>genre</th>";
+		$html .= "</tr>";
+		
+		foreach($saveData as $i){
+			
+		$html .= "<tr>";
+				$html .= "<td>".$i->id."</td>";
+				$html .= "<td>".$i->Username."</td>";
+				$html .= "<td>".$i->favActor."</td>";
+				$html .= "<td>".$i->favMov."</td>";
+				$html .= "<td>".$i->movGenre."</td>";
+		$html .= "</tr>";
+
+		}
+			
+		$html .= "</table>";	
+		
+	
+	
+?>

@@ -129,7 +129,54 @@
 		$mysqli->close();
 		
 	}
+	
+		function getMovieData() {
 		
+			$database = "if16_ege";
+			$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $database);
+		
+			$stmt = $mysqli->prepare("
+			
+			SELECT id, username, movie_actor, movie_fav, movie_genre
+			FROM user_movies
+			");
+			
+			echo $mysqli->error;
+			
+			$stmt->bind_result($id, $username, $movie_actor, $movie_fav, $movie_genre);
+			$stmt->execute();
+			
+			//tekitan massiivi
+			$result = array();
+			
+			//tee seda seni, kuni on rida andmeid
+			//mis vastab select lausele
+			while($stmt->fetch()) {
+				
+				
+			//tekitan objekti
+			$i = new StdClass();
+			
+			$i->id = $id;
+			$i->Username = $username;
+			$i->favActor = $movie_actor;
+			$i->favMov = $movie_fav;
+			$i->movGenre = $movie_genre;
+			
+			
+				//echo $plate."<br>";
+				//igakord massiivi lisan juurde nr märgi
+				array_push($result, $i);				
+			}
+			
+		
+			
+			$stmt->close();
+			$mysqli->close();
+		
+		return $result;
+		
+	}
 		
 		
 		function cleanInput($input){
@@ -144,6 +191,8 @@
 			
 			
 		}
+		
+		
 		
 		
 		
