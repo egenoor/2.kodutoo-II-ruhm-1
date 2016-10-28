@@ -22,17 +22,17 @@
 	//**** SIGNUP *****
 	//*****************	
 		
-	function signUp ($email, $password, $website, $comment, $age)	{
+	function signUp ($username, $email, $password, $website, $comment, $age)	{
 		
 		$database = "if16_ege";
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $database);
 	
 		//sqli rida
-		$stmt = $mysqli->prepare("INSERT INTO user_sample (email, password, website, comment, age) VALUES (?, ?, ?, ?, ?)");
+		$stmt = $mysqli->prepare("INSERT INTO user_sample (username, email, password, website, comment, age) VALUES (?, ?, ?, ?, ?, ?)");
 		
 		echo $mysqli->error;
 		
-		$stmt->bind_param("sssss", $email, $password, $website, $comment, $age);
+		$stmt->bind_param("ssssss", $username, $email, $password, $website, $comment, $age);
 		
 		//täida käsku
 		if($stmt ->execute() ) {
@@ -46,14 +46,11 @@
 		$stmt->close();
 		$mysqli->close();
 		
-		
-		
-		
 	}
 	
 	
 		
-	function login ($email, $password) {
+	function login ($username, $password) {
 		
 		$error = "";
 		
@@ -63,16 +60,16 @@
 	
 		//sqli rida
 		$stmt = $mysqli->prepare("
-		SELECT id, email, password, created 
-		FROM user_sample WHERE email = ?");
+		SELECT id, username, email, password, created 
+		FROM user_sample WHERE username = ?");
 		
 		echo $mysqli->error;
 		
 		//asendan küsimärgi s on string (d on komaga arv, i on täisarv)
-		$stmt->bind_param("s", $email);
+		$stmt->bind_param("s", $username);
 		
 		//määran väärtused muutujatesse
-		$stmt->bind_result($id, $emailFromDb, $passwordFromDb, $created);
+		$stmt->bind_result($id, $usernameFromDb, $emailFromDb, $passwordFromDb, $created);
 		$stmt->execute();
 		
 		//andmed tulid andmebaasist või mitte
@@ -86,6 +83,7 @@
 			echo "kasutaja logis sisse" .$id;
 			
 			$_SESSION["userId"] = $id;
+			$_SESSION["userName"]= $usernameFromDb;
 			$_SESSION["userEmail"] = $emailFromDb;
 			
 			$_SESSION["message"] = "<h1>Tere tulemast!</h1>";
@@ -102,7 +100,7 @@
 		} else {
 			
 			//ei leidnud kasutajat selle nimega
-			$error = "ei ole sellist emaili";
+			$error = "ei ole sellist kasutajanime";
 		}
 			
 		return $error; 
@@ -130,67 +128,67 @@
 		
 	}
 	
-		function getMovieData() {
+	function getMovieData() {
+	
+		$database = "if16_ege";
+		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $database);
+	
+		$stmt = $mysqli->prepare("
 		
-			$database = "if16_ege";
-			$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $database);
+		SELECT id, username, movie_actor, movie_fav, movie_genre
+		FROM user_movies
+		");
 		
-			$stmt = $mysqli->prepare("
-			
-			SELECT id, username, movie_actor, movie_fav, movie_genre
-			FROM user_movies
-			");
-			
-			echo $mysqli->error;
-			
-			$stmt->bind_result($id, $username, $movie_actor, $movie_fav, $movie_genre);
-			$stmt->execute();
-			
-			//tekitan massiivi
-			$result = array();
-			
-			//tee seda seni, kuni on rida andmeid
-			//mis vastab select lausele
-			while($stmt->fetch()) {
-				
-				
-			//tekitan objekti
-			$i = new StdClass();
-			
-			$i->id = $id;
-			$i->Username = $username;
-			$i->favActor = $movie_actor;
-			$i->favMov = $movie_fav;
-			$i->movGenre = $movie_genre;
+		echo $mysqli->error;
+		
+		$stmt->bind_result($id, $username, $movie_actor, $movie_fav, $movie_genre);
+		$stmt->execute();
+		
+		//tekitan massiivi
+		$result = array();
+		
+		//tee seda seni, kuni on rida andmeid
+		//mis vastab select lausele
+		while($stmt->fetch()) {
 			
 			
-				//echo $plate."<br>";
-				//igakord massiivi lisan juurde nr märgi
-				array_push($result, $i);				
-			}
+		//tekitan objekti
+		$i = new StdClass();
+		
+		$i->id = $id;
+		$i->Username = $username;
+		$i->favActor = $movie_actor;
+		$i->favMov = $movie_fav;
+		$i->movGenre = $movie_genre;
+		
+		
+		//echo $plate."<br>";
+		//igakord massiivi lisan juurde nr märgi
+		array_push($result, $i);				
+		}
 			
 		
 			
-			$stmt->close();
-			$mysqli->close();
+		$stmt->close();
+		$mysqli->close();
 		
 		return $result;
 		
 	}
 		
 		
-		function cleanInput($input){
-			
-			$input = trim($input);
-			$input = stripslashes($input);
-			$input = htmlspecialchars($input);
-			
-		return $input;	
-			
-			
-			
-			
-		}
+	function cleanInput($input){
+		
+		$input = trim($input);
+		$input = stripslashes($input);
+		$input = htmlspecialchars($input);
+		
+	return $input;	
+		
+		
+		
+		
+	}
 		
 		
 		

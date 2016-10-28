@@ -23,17 +23,30 @@
 	//echo "<br>";
 	//var_dump($_POST);
 	
-	//MUUTUJAD	
+	//MUUTUJAD
+	$signupUsernameError = "";
 	$signupEmailError = "";
 	$signupPasswordError = "";
 	$signupCommentError = "";
 	$signupComment = "";
+	$signupUsername = "";
 	$signupEmail = "";
 	$signupGender = "";
 	$signupWebsite = "";
 	$signupAge = "";
 	
-	// kas e/post oli olemas
+	
+	if(isset($_POST["signupUsername"])){
+		
+		if(empty($_POST["signupUsername"])){
+			
+			$signupUsernameError = "Sisesta kasutajanimi";
+		} else {
+			$signupUsername = $_POST["signupUsername"];
+		}
+	}	
+	
+	// kas e-post oli olemas
 	if ( isset ( $_POST["signupEmail"] ) ) {
 		
 		if ( empty ( $_POST["signupEmail"] ) ) {
@@ -87,16 +100,11 @@
 	
 	}
 	
-	if ( isset ( $_POST["signupAge"] ) ) {
-		
-		if ( empty ( $_POST["signupAge"] ) ) {
-			
-		} else {
+	if ( isset ( $_POST["signupAge"] ) &&
+		!empty ( $_POST["signupAge"] )) {
 			
 			$signupAge = $_POST["signupAge"];
-			
-		}
-		
+
 	}
 	
 	if ( isset ( $_POST["signupGender"] ) ) {
@@ -132,14 +140,11 @@
 		isset($_POST["signupComment"]) &&
 		isset($_POST["signupAge"]) &&
 		$signupEmailError == "" &&
-	     empty ($signupPasswordError)
-
-		 
-		 ) {
+	    empty ($signupPasswordError)) {
 		 
 		 //salvestame ab'i
 		 echo "Salvestan...<br>";
-		 
+		 echo "username:".$signupUsername."<br>";
 		 echo "email: ".$signupEmail."<br>";
 		 echo "password: ".$_POST["signupPassword"]."<br>";
 		 
@@ -156,25 +161,22 @@
 		 //KASUTAN FUNKTSIOONI
 		 $signupEmail = cleanInput($signupEmail);
 		 $signupWebsite = cleanInput($signupWebsite);
-		 
-		 signUp($signupEmail, cleanInput($password), $signupWebsite, $signupComment, $signupAge);
+		 $signupUsername = cleanInput($_POST["signupUsername"]);
+		 signUp($signupUsername, $signupEmail, cleanInput($password), $signupWebsite, $signupComment, $signupAge);
 		
 		
 		
 	}
 	
 	$error ="";
-	if (isset($_POST["loginEmail"]) && 
-	isset($_POST["loginPassword"]) &&
-		!empty($_POST["loginEmail"]) && 
-		!empty($_POST["loginPassword"])
-		) {
+	if (isset($_POST["loginUsername"]) && 
+		isset($_POST["loginPassword"]) &&
+		!empty($_POST["loginUsername"]) && 
+		!empty($_POST["loginPassword"])) {
 			
-			$error = login(cleanInput($_POST["loginEmail"]), cleanInput($_POST["loginPassword"]));
-			
-			
-			
-		}
+			$error = login(cleanInput($_POST["loginUsername"]), cleanInput($_POST["loginPassword"]));
+					
+	}
 	
 	
 	
@@ -194,15 +196,11 @@
 			
 			 <p style="color:red;"><?=$error;?></p>
 			
-			<label>Email</label><br>
-			<input name="loginEmail" type="text"> 
-			
+			<label>Username</label><br>
+			<input name="loginUsername" type="text"> 
 			<br><br>
-			
 			<input name="loginPassword" type="password" placeholder="Password">
-			
 			<br><br>
-			
 			<input type="submit" value="Log in">
 			
 		</form>
@@ -211,12 +209,20 @@
 		
 		<form method="POST">
 			
-			<label>Email</label><br>
-			<input name="signupEmail" type="text" value="<?=$signupEmail;?>"> <?php echo $signupEmailError; ?>
+			<label>Username</label><br>
+			<input name="signupUsername" type="text" value="<?=$signupUsername;?>">
+			<?php echo $signupUsernameError; ?>
 			
 			<br><br>
 			
-			<input name="signupPassword" type="password" placeholder="Password"> <?php echo $signupPasswordError; ?>
+			<label>Email</label><br>
+			<input name="signupEmail" type="text" value="<?=$signupEmail;?>">
+			<?php echo $signupEmailError; ?>
+			
+			<br><br>
+			
+			<input name="signupPassword" type="password" placeholder="Password">
+			<?php echo $signupPasswordError; ?>
 			
 			<br><br>
 			
@@ -226,7 +232,8 @@
 			<br><br>
 			
 			<label>Comment</label><br>
-			<textarea name="signupComment" rows="5" cols="40"><?=$signupComment;?></textarea> <?php echo $signupCommentError; ?>
+			<textarea name="signupComment" rows="5" cols="40"><?=$signupComment;?></textarea>
+			<?php echo $signupCommentError; ?>
 			
 			<br><br>
 			
@@ -237,10 +244,10 @@
 			<label>Gender</label><br>
 			
 			<?php if($signupGender == "male") { ?>
-			<input type="radio" name="signupGender" value="male" checked> Man<br>
+			<input type="radio" name="signupGender" value="male" checked> Male<br>
 			<?php }else { ?>
 			
-			<input type="radio" name="signupGender" value="male"> Man<br>
+			<input type="radio" name="signupGender" value="male"> Male<br>
 			<?php } ?>
 		
 			<?php if($signupGender == "female") { ?>

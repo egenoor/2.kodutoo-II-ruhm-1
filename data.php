@@ -35,7 +35,7 @@
 <h1>Data</h1>
 <?=$msg;?>
 
-<p> Welcome <?=$_SESSION["userEmail"];?>!</p>
+<p> Welcome <?=$_SESSION["userName"];?>!</p>
 <p><a href="movies.php"> Movies </a></p>
 <a href="?logout=1"> Log out</a> 
 

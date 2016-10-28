@@ -33,63 +33,31 @@
 		unset($_SESSION["message"]);
 	}
 		 
-	if ( isset ( $_POST["Username"] ) ) {
-		
-		if (!empty ( $_POST["Username"] ) ) {
-			
-			
-			$Username = $_POST["Username"];
-			
-		}
-		
-	}
-	
-		if ( isset ( $_POST["favActor"] ) ) {
-		
-		if (!empty ( $_POST["Username"] ) ) {
-			
-			
-			$favActor = $_POST["favActor"];
-			
-		}
+	if (isset($_POST["favActor"])&&
+		isset($_POST["favMov"])&&
+		isset($_POST["movGenre"])&&
+		!empty($_POST["favActor"])&&
+		!empty($_POST["favMov"])&&
+		!empty($_POST["movGenre"])){
+				
+			$favActor = cleanInput($_POST["favActor"]);
+			$favMov = cleanInput($_POST["favMov"]);
+			$movGenre = cleanInput($_POST["movGenre"]);
 		
 	}
 	
-		if ( isset ( $_POST["favMov"] ) ) {
-		
-		if (!empty ( $_POST["favMov"] ) ) {
-			
-			
-			$favMov = $_POST["favMov"];
-			
-		}
-		
-	}
+
 	
-		if ( isset ( $_POST["movGenre"] ) ) {
-		
-		if (!empty ( $_POST["movGenre"] ) ) {
-			
-			
-			$movGenre = $_POST["movGenre"];
-			
-		}
-		
-	}
-	
-		if(isset($_POST["Username"]) &&
-		isset($_POST["favActor"]) &&
+	if(isset($_POST["favActor"]) &&
 		isset($_POST["favMov"]) &&
 		isset($_POST["movGenre"]) &&
-		!empty($_POST["Username"]) &&
 		!empty($_POST["favActor"]) &&
-		!empty($_POST["favMov"])
-		) {
+		!empty($_POST["favMov"]) &&
+		!empty($_POST["movGenre"])) {
 			
-		saveData($_POST["Username"], $_POST["favActor"], $_POST["favMov"], $_POST["movGenre"]);
+		saveData($_SESSION["userName"], $_POST["favActor"], $_POST["favMov"], $_POST["movGenre"]);
 		
-			
-		}
+	}
 			
 			//saan filmi andmed
 			$saveData = getMovieData();
@@ -106,18 +74,13 @@
 		<h1>Movies</h1>
 		<?=$msg;?>
 			<p>
-			Welcome <?=$_SESSION["userEmail"];?>!
+			Welcome <?=$_SESSION["userName"];?>!
 			<a href="?logout=1">Log out</a>
 			</p>
 
 		<h2> Add data </h2>
 		
 			<form method="POST">
-		
-				<label>Username:</label><br>
-				<input name="Username" type="text" value="<?=$Username;?>">
-			
-				<br><br>
 				
 				<label>Favorite actor:</label><br>
 				<input name="favActor" type="text" value="<?=$favActor;?>">
@@ -174,7 +137,9 @@
 
 		}
 			
-		$html .= "</table>";	
+		$html .= "</table>";
+		
+		echo $html;
 		
 	
 	
