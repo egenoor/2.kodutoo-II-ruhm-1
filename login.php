@@ -12,7 +12,7 @@
 		exit();
 	}
 	
-	 echo "<body style='background-color:lightblue'>";
+	 echo "<body style='background-color:lightgrey'>";
 	//<?php echo $m;? >
 	//<?=$m;? >
 
@@ -24,6 +24,7 @@
 	//var_dump($_POST);
 	
 	//MUUTUJAD
+	$loginUsernameError = "";
 	$signupUsernameError = "";
 	$signupEmailError = "";
 	$signupPasswordError = "";
@@ -196,7 +197,7 @@
 			
 			 <p style="color:red;"><?=$error;?></p>
 			
-			<label>Username</label><br>
+			<label>Username:</label><br>
 			<input name="loginUsername" type="text"> 
 			<br><br>
 			<input name="loginPassword" type="password" placeholder="Password">
@@ -209,13 +210,13 @@
 		
 		<form method="POST">
 			
-			<label>Username</label><br>
+			<label>Username:</label><br>
 			<input name="signupUsername" type="text" value="<?=$signupUsername;?>">
 			<?php echo $signupUsernameError; ?>
 			
 			<br><br>
 			
-			<label>Email</label><br>
+			<label>Email:</label><br>
 			<input name="signupEmail" type="text" value="<?=$signupEmail;?>">
 			<?php echo $signupEmailError; ?>
 			
@@ -226,22 +227,22 @@
 			
 			<br><br>
 			
-			<label>Website</label><br>
+			<label>Website:</label><br>
 			<input name="signupWebsite" type="text" value="<?=$signupWebsite;?>">
 			
 			<br><br>
 			
-			<label>Comment</label><br>
+			<label>Comment:</label><br>
 			<textarea name="signupComment" rows="5" cols="40"><?=$signupComment;?></textarea>
 			<?php echo $signupCommentError; ?>
 			
 			<br><br>
 			
-			<label>Age</label><br>
+			<label>Age:</label><br>
 			<input name="signupAge" type="age" value="<?=$signupAge;?>">
 			
 			<br><br>
-			<label>Gender</label><br>
+			<label>Gender:</label><br>
 			
 			<?php if($signupGender == "male") { ?>
 			<input type="radio" name="signupGender" value="male" checked> Male<br>
@@ -256,8 +257,7 @@
 			<input type="radio" name="signupGender" value="female"> Female<br>
 			<?php } ?>
 			
-			
-			<br><br>
+			<br>
 			
 			<input type="submit" value="Create account">
 			

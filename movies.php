@@ -6,7 +6,7 @@
 	$Username = "";
 	$favActor = "";
 	$favMov = "";
-	//$movGenre = "";
+	$movGenre = "";
 	
 	//kui ei ole kasutaja id'd
 	if (!isset($_SESSION["userId"])){
@@ -17,7 +17,7 @@
 	}
 	
 	
-	//kui on ?logout aadressireal siis login välja
+	//kui on ?logout aadressireal siis log out
 	if (isset($_GET["logout"])) {
 		
 		session_destroy();
@@ -29,7 +29,6 @@
 	if(isset($_SESSION["message"])){
 		$msg = $_SESSION["message"];
 		
-		//kui ühe näitame siis kustuta ära, et pärast refreshi ei näitaks
 		unset($_SESSION["message"]);
 	}
 		 
@@ -91,6 +90,7 @@
 				<input name="favMov" type="text" value="<?=$favMov;?>">
 				
 				<br><br>
+
 				
 				<label>Movie genre:</label><br>
 					<select name="movGenre">
@@ -103,6 +103,7 @@
 						<option value="Romance" <?php echo $result['genre'] == 'Romance' ? 'selected' : ''?>>Romance</option>
 						<option value="Horror" <?php echo $result['genre'] == 'Horror' ? 'selected' : ''?> >Horror</option>
 						<option value="Documentary" <?php echo $result['genre'] == 'Documentary' ? 'selected' : ''?>>Documentary</option>
+						<option value="Fantasy" <?php echo $result['genre'] == 'Fantasy' ? 'selected' : ''?>>Fantasy</option>
 						</select>
 					
 				<input type="submit" value="Submit">
@@ -111,6 +112,16 @@
 		</form>
 	</body>
 </html>
+
+<br><br>
+
+<head>
+<style>
+table, th, td {
+    border: 1px solid black;
+}
+</style>
+</head>
 
 <?php
 	
