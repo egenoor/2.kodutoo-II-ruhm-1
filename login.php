@@ -187,8 +187,8 @@ if (isset($_POST["loginUsername"]) &&
     <p style="color:red;"><?=$error;?></p>
 
     <label>Username:</label><br>
-    <input name="loginUsername" type="text"> value=<?=$loginUsername;?>">
-    <?php echo $loginUsernameError;?>
+    <input name="loginUsername" type="text" value="<?=$loginUsername;?>">
+    <?php echo $loginUsernameError; ?>
     <br><br>
     <input name="loginPassword" type="password" placeholder="Password">
     <br><br>
