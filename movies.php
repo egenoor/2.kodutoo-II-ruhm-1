@@ -32,42 +32,6 @@ if(isset($_SESSION["message"])){
     unset($_SESSION["message"]);
 }
 
-if (isset($_POST["favActor"])) {
-
-    if (!empty ($_POST["favActor"])) {
-
-        $favActor = $_POST["favActor"];
-
-        } else {
-
-            $error;
-        }
-}
-
-if (isset($_POST["favMov"])) {
-
-    if (!empty ($_POST["favMov"])) {
-
-        $favMov = $_POST["favMov"];
-
-        } else {
-
-            $error;
-        }
-}
-
-if (isset($_POST["movGenre"])) {
-
-    if (!empty ($_POST["movGenre"])) {
-
-        $movGenre = $_POST["movGenre"];
-
-    } else {
-
-        $error;
-    }
-}
-
 if (isset($_POST["favActor"])&&
     isset($_POST["favMov"])&&
     isset($_POST["movGenre"])&&
@@ -89,16 +53,10 @@ if(isset($_POST["favActor"]) &&
     !empty($_POST["favMov"]) &&
     !empty($_POST["movGenre"])) {
 
-    }
-            else {
-                echo "$error";}{
-
-
-
-
     saveData($_SESSION["userName"], $_POST["favActor"], $_POST["favMov"], $_POST["movGenre"]);
 
-}
+    } else {
+            echo "$error";}
 
 //saan filmi andmed
 $saveData = getMovieData();
