@@ -28,22 +28,24 @@ if (isset($_GET["logout"])) {
 $msg = "";
 if(isset($_SESSION["message"])){
     $msg = $_SESSION["message"];
-
     unset($_SESSION["message"]);
 }
 
-if (isset($_POST["favActor"])&&
-    isset($_POST["favMov"])&&
-    isset($_POST["movGenre"])&&
-    !empty($_POST["favActor"])&&
-    !empty($_POST["favMov"])&&
-    !empty($_POST["movGenre"])){
+if (isset($_POST["favActor"])) {
+    if (!empty ($_POST["favActor"])) {
+        $favActor = cleanInput($_POST["favActor"]);
+    }
 
-    $favActor = cleanInput($_POST["favActor"]);
-    $favMov = cleanInput($_POST["favMov"]);
-    $movGenre = cleanInput($_POST["movGenre"]);
+if (isset($_POST["favMov"])) {
+    if (!empty ($_POST["favMov"])) {
+        $favMov = cleanInput($_POST["favMov"]);
+        }
 
-}
+if (isset($_POST["movGenre"])) {
+    if (!empty ($_POST["movGenre"])) {
+        $movGenre = cleanInput($_POST["movGenre"]);
+    }
+
 $error= "Täida kõik väljad";
 
 if(isset($_POST["favActor"]) &&
