@@ -26,47 +26,52 @@ if (isset($_GET["logout"])) {
 }
 
 $msg = "";
-if(isset($_SESSION["message"])){
-    $msg = $_SESSION["message"];
-    unset($_SESSION["message"]);
-}
-
-if (isset($_POST["favActor"]) &&
-    !empty ($_POST["favActor"])) {
-        $favActor = cleanInput($_POST["favActor"]);
+    if(isset($_SESSION["message"])){
+        $msg = $_SESSION["message"];
+        unset($_SESSION["message"]);
     }
 
-if (isset($_POST["favMov"]) &&
-    !empty ($_POST["favMov"])) {
-        $favMov = cleanInput($_POST["favMov"]);
+    if (isset($_POST["favActor"]) &&
+        !empty ($_POST["favActor"])) {
+            $favActor = cleanInput($_POST["favActor"]);
         }
 
-if (isset($_POST["movGenre"]) &&
-    !empty ($_POST["movGenre"])) {
-        $movGenre = cleanInput($_POST["movGenre"]);
-    }
+    if (isset($_POST["favMov"]) &&
+        !empty ($_POST["favMov"])) {
+            $favMov = cleanInput($_POST["favMov"]);
+            }
+
+    if (isset($_POST["movGenre"]) &&
+        !empty ($_POST["movGenre"])) {
+            $movGenre = cleanInput($_POST["movGenre"]);
+        }
 
 $error= "";
 
-if(isset($_POST["favActor"]) &&
-    isset($_POST["favMov"]) &&
-    isset($_POST["movGenre"]) &&
-    !empty($_POST["favActor"]) &&
-    !empty($_POST["favMov"]) &&
-    !empty($_POST["movGenre"])) {
+    if(isset($_POST["favActor"]) &&
+        isset($_POST["favMov"]) &&
+        isset($_POST["movGenre"]) &&
+        !empty($_POST["favActor"]) &&
+        !empty($_POST["favMov"]) &&
+        !empty($_POST["movGenre"])) {
 
-    saveData($_SESSION["userName"], $_POST["favActor"], $_POST["favMov"], $_POST["movGenre"]);
+        saveData($_SESSION["userName"], $_POST["favActor"], $_POST["favMov"], $_POST["movGenre"]);
 
-    } else {
+    }
+    elseif(isset($_POST["favActor"]) &&
+        isset($_POST["favMov"]) &&
+        isset($_POST["movGenre"]) &&
+        empty($_POST["favActor"]) &&
+        empty($_POST["favMov"]) &&
+        empty($_POST["movGenre"])) {
 
         $error = "Täida kõik väljad";
     }
 
-echo "$error";
+    echo $error;
+
 //saan filmi andmed
 $saveData = getMovieData();
-
-
 ?>
 
 
