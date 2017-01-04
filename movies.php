@@ -59,11 +59,11 @@ $error= "";
 
     }
     elseif(isset($_POST["favActor"]) &&
-        isset($_POST["favMov"]) &&
-        isset($_POST["movGenre"]) &&
-        empty($_POST["favActor"]) &&
-        empty($_POST["favMov"]) &&
-        empty($_POST["movGenre"])) {
+            isset($_POST["favMov"]) &&
+            isset($_POST["movGenre"]) &&
+            empty($_POST["favActor"]) &&
+            empty($_POST["favMov"]) &&
+            empty($_POST["movGenre"])) {
 
         $error = "Täida kõik väljad";
     }
@@ -104,6 +104,7 @@ $saveData = getMovieData();
 
         <label>Movie genre:</label><br>
         <select name="movGenre">
+            <option value="" <?php echo $result['genre'] == 'Action' ? 'selected' : ''?> > </option>
             <option value="Action" <?php echo $result['genre'] == 'Action' ? 'selected' : ''?> >Action</option>
             <option value="Comedy" <?php echo $result['genre'] == 'Comedy' ? 'selected' : ''?>>Comedy</option>
             <option value="Crime" <?php echo $result['genre'] == 'Crime' ? 'selected' : ''?>>Crime</option>
